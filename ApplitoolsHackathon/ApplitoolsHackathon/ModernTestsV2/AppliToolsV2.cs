@@ -40,7 +40,7 @@ namespace ApplitoolsHackathon.Task1
             Configuration testConfig = eyes.GetConfiguration();
             testConfig.SetTestName("Task2");
             eyes.SetConfiguration(testConfig);
-            Driver= eyes.Open(webDriver);
+            Driver= eyes.Open(webDriver,"Applifashion", "Task2", new Size(800, 600));
             // Open Eyes, the application,test name and viewport size are allready configured
             // IWebDriver driver = 
 
@@ -62,7 +62,7 @@ namespace ApplitoolsHackathon.Task1
             eyes.SetConfiguration(testConfig);
 
             // Open Eyes, the application,test name and viewport size are allready configured
-            Driver = eyes.Open(webDriver);
+            Driver = eyes.Open(webDriver, "Applifashion", "Task3", new Size(800, 600));
 
             // Now run the test
 
