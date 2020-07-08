@@ -24,7 +24,7 @@ namespace ApplitoolsHackathon.Task1
             eyes.SetConfiguration(testConfig);
 
             // Open Eyes, the application,test name and viewport size are allready configured
-            IWebDriver driver = eyes.Open(webDriver);
+            IWebDriver driver = eyes.Open(webDriver, "Applifashion", "Task1", new Size(800, 600));
 
             // Now run the test
 

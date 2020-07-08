@@ -24,7 +24,7 @@ namespace ApplitoolsHackathon.Task1
             eyes.SetConfiguration(testConfig);
 
             // Open Eyes, the application,test name and viewport size are allready configured
-            IWebDriver driver = eyes.Open(webDriver);
+            IWebDriver driver = eyes.Open(webDriver,"Applifashion","Task1", new Size(800, 600));
 
             // Now run the test
 
@@ -40,15 +40,18 @@ namespace ApplitoolsHackathon.Task1
             Configuration testConfig = eyes.GetConfiguration();
             testConfig.SetTestName("Task2");
             eyes.SetConfiguration(testConfig);
-            Driver= eyes.Open(webDriver);
+            Driver= eyes.Open(webDriver, "Applifashion", "Task2", new Size(800, 600));
             // Open Eyes, the application,test name and viewport size are allready configured
             // IWebDriver driver = 
 
             // Now run the test
 
             // Visual checkpoint #1.
-            Driver.Url = StableVersionUrl;   // navigate to website
+            Driver.Url = StableVersionUrl;
+            
+            clickonFilterIcon();// navigate to website
             SelectBlackColor();
+            clickonFilterIcon();
             ClickOnFilterButton();
             eyes.Check(Target.Region(By.Id("product_grid")).WithName("Filter Result"));
         }

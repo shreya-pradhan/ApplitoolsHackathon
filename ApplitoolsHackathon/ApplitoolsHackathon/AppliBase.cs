@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Applitools.Utils.Geometry;
@@ -18,11 +19,10 @@ namespace ApplitoolsHackathon
     [TestFixture]
     public class AppliBase
     {
-         private readonly int viewPortWidth = 800;
-         private readonly int viewPortHeight = 600;
+     
          private readonly string appName = "AppliFashion";
          private readonly string batchName = "UFG Hackathon";
-         private readonly string apiKey = "OkYtFhigb6LgOV4pbDWqFlzvvExrXxxWaLE2JYofOO8110";
+         private readonly string apiKey = "Z98eCImryQjbVkJaC6oBQuzh9ZqHmxwmgMXVmKLxyOlg110";
          private readonly int concurrentSessions = 5;
 
          private EyesRunner runner = null;
@@ -37,6 +37,7 @@ namespace ApplitoolsHackathon
          public const string CheckBoxElementByBlackColor = "input#colors__Black";
 
          public const string FirstIteminGridByCss = "div#product_grid div:nth-of-type(1) div.grid_item a";
+         public const string SearchFilterIcon = "#ti-filter";
          public const string StableVersionUrl = "https://demo.applitools.com/gridHackathonV1.html";
 
          public const string NewVersionUrl = "https://demo.applitools.com/gridHackathonV2.html";
@@ -44,8 +45,7 @@ namespace ApplitoolsHackathon
          
          public IWebDriver Driver { get; set; }
          public Eyes Eyes { get; set; }
-         public Size Resolution720P => new Size(1280, 720);
-         public Size Resolution800P => new Size(800, 600);
+        
          
          // public static BatchInfo BatchName { get; set; }
 
@@ -55,6 +55,14 @@ namespace ApplitoolsHackathon
          {
              return Driver.FindElement(By.CssSelector(elementLocator));
          }
+
+         public void clickonFilterIcon()
+         {
+             Thread.Sleep(300);
+             ClickOnElement(SearchFilterIcon);
+         }
+
+         
 
          public void ClickOnElement(string locator)
          {
@@ -98,24 +106,19 @@ namespace ApplitoolsHackathon
              // Create a configuration object, we will use this when setting up each test
              suiteConfig = new Configuration();
              IConfiguration newsuiteConfg = new Configuration();
+            suiteConfig.AddBrowser(1200, 700, BrowserType.CHROME);
+            suiteConfig.AddBrowser(1200, 700, BrowserType.FIREFOX);
+             suiteConfig.AddBrowser(1200, 700, BrowserType.EDGE_CHROMIUM);
+             suiteConfig.AddBrowser(768, 700, BrowserType.CHROME);
+             suiteConfig.AddBrowser(768, 700, BrowserType.FIREFOX);
+             suiteConfig.AddBrowser(768, 700, BrowserType.EDGE_CHROMIUM);
+             suiteConfig.AddDeviceEmulation(DeviceName.iPhone_X, Applitools.VisualGrid.ScreenOrientation.Portrait);
 
-             suiteConfig
-                 // Visual Grid configurations
-                 .AddBrowser(900, 600, BrowserType.CHROME)
-                 .AddBrowser(1024, 786, BrowserType.FIREFOX)
-                 .AddBrowser(900, 600, BrowserType.FIREFOX)
-                 .AddBrowser(900, 600, BrowserType.IE_10)
-                 .AddBrowser(1024, 786, BrowserType.IE_11)
-                 .AddBrowser(900, 600, BrowserType.EDGE)
-                 .AddDeviceEmulation(DeviceName.iPhone_4, Applitools.VisualGrid.ScreenOrientation.Portrait)
-                 .AddDeviceEmulation(DeviceName.Galaxy_S5, Applitools.VisualGrid.ScreenOrientation.Landscape)
-                 // Test suite configurations
+            suiteConfig
                  .SetApiKey(apiKey)
                  .SetAppName(appName)
                  .SetBatch(new BatchInfo(batchName))
-                 // Checkpoint configurations
-                 // Test specific configurations ....
-                 .SetViewportSize(new Applitools.Utils.Geometry.RectangleSize(viewPortWidth, viewPortHeight));
+                 ;
 
          }
 
@@ -146,6 +149,7 @@ namespace ApplitoolsHackathon
                  eyes.AbortIfNotClosed();
              }
              webDriver.Quit();
+             
          }
 
          [OneTimeTearDown]
